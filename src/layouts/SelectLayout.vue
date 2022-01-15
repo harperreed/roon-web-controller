@@ -20,7 +20,7 @@ export default {
   data: function () {
     return {
       layout_list: [
-        { route: "Touchscreen", name: "Touchscreen" },
+        { route: "Controller", name: "Controller" },
       ],
     };
   },
