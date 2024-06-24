@@ -1,6 +1,6 @@
 <template lang="html">
-  <div data-name="Touchscreen">
-    <TouchscreenBackgroundCoverArt
+  <div data-name="Controller">
+    <BackgroundCoverArt
       v-if="
         show_cover_background === true &&
         current_zone &&
@@ -9,47 +9,47 @@
       "
       v-bind:image_key="current_zone.now_playing.image_key"
     />
-    <TouchscreenOverlayVolume v-if="ui.show_volume === true" />
-    <TouchscreenOverlayZoneSelect
+    <OverlayVolume v-if="ui.show_volume === true" />
+    <OverlayZoneSelect
       v-if="ui.show_zone_select === true || current_zone_id === ''"
     />
-    <TouchscreenOverlaySettings v-if="ui.show_settings === true" />
-    <template v-if="this.$route.name === 'Touchscreen'">
-      <div class="touchscreen_view_controls">
-        <TouchscreenControlsViews />
-        <TouchscreenControlsOverlays />
+    <OverlaySettings v-if="ui.show_settings === true" />
+    <template v-if="this.$route.name === 'Controller'">
+      <div class="Controller_view_controls">
+        <ControlsViews />
+        <ControlsOverlays />
       </div>
     </template>
     <template v-else>
       <transition v-bind:name="transition_name">
-        <router-view id="touchscreen_content" />
+        <router-view id="Controller_content" />
       </transition>
     </template>
   </div>
 </template>
 
 <script>
-import TouchscreenBackgroundCoverArt from "@/components/TouchscreenBackgroundCoverArt.vue";
-import TouchscreenOverlayVolume from "@/components/TouchscreenOverlayVolume.vue";
-import TouchscreenOverlayZoneSelect from "@/components/TouchscreenOverlayZoneSelect.vue";
-import TouchscreenOverlaySettings from "@/components/TouchscreenOverlaySettings.vue";
-import TouchscreenControlsViews from "@/components/TouchscreenControlsViews.vue";
-import TouchscreenControlsOverlays from "@/components/TouchscreenControlsOverlays.vue";
+import BackgroundCoverArt from "@/components/BackgroundCoverArt.vue";
+import OverlayVolume from "@/components/OverlayVolume.vue";
+import OverlayZoneSelect from "@/components/OverlayZoneSelect.vue";
+import OverlaySettings from "@/components/OverlaySettings.vue";
+import ControlsViews from "@/components/ControlsViews.vue";
+import ControlsOverlays from "@/components/ControlsOverlays.vue";
 
 export default {
-  name: "Touchscreen",
+  name: "Controller",
   data: function () {
     return {
       transition_name: "",
     };
   },
   components: {
-    TouchscreenBackgroundCoverArt,
-    TouchscreenOverlayVolume,
-    TouchscreenOverlayZoneSelect,
-    TouchscreenOverlaySettings,
-    TouchscreenControlsViews,
-    TouchscreenControlsOverlays,
+    BackgroundCoverArt,
+    OverlayVolume,
+    OverlayZoneSelect,
+    OverlaySettings,
+    ControlsViews,
+    ControlsOverlays,
   },
   computed: {
     ui: {
@@ -78,17 +78,15 @@ export default {
   watch: {
     $route(to, from) {
       if (
-        (from.name === "TouchscreenLibrary" &&
-          to.name === "TouchscreenNowPlaying") ||
-        (from.name === "TouchscreenNowPlaying" &&
-          to.name === "TouchscreenQueue")
+        (from.name === "ControllerLibrary" &&
+          to.name === "ControllerNowPlaying") ||
+        (from.name === "ControllerNowPlaying" && to.name === "ControllerQueue")
       ) {
         this.transition_name = "slide-down";
       } else if (
-        (from.name === "TouchscreenNowPlaying" &&
-          to.name === "TouchscreenLibrary") ||
-        (from.name === "TouchscreenQueue" &&
-          to.name === "TouchscreenNowPlaying")
+        (from.name === "ControllerNowPlaying" &&
+          to.name === "ControllerLibrary") ||
+        (from.name === "ControllerQueue" && to.name === "ControllerNowPlaying")
       ) {
         this.transition_name = "slide-up";
       } else {
@@ -100,14 +98,14 @@ export default {
 </script>
 
 <style lang="css">
-#touchscreen_content {
+#Controller_content {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
-.touchscreen_view_controls {
+.Controller_view_controls {
   width: 100%;
   height: 100%;
   display: flex;
